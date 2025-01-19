@@ -1,6 +1,14 @@
-import React from 'react'
+interface User {
+  id: number
+  name: string
+}
 
-const UserList = ({ users, onRemoveUser }) => {
+interface UserListProps {
+  users: User[]
+  onRemoveUser: (id: number) => void
+}
+
+const UserList: React.FC<UserListProps> = ({ users, onRemoveUser }) => {
   return (
     <ul className="user-list">
       {users.map((user) => (

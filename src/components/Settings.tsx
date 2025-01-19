@@ -1,10 +1,11 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { RootState, AppDispatch } from 'store/store'
 import { toggleTheme } from '../store/settingsSlice'
 
-const Settings = () => {
-  const dispatch = useDispatch()
-  const theme = useSelector((state) => state.settings.theme)
+const Settings: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch()
+  const theme = useSelector((state: RootState) => state.settings.theme)
 
   return (
     <div>
