@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, AppDispatch } from 'store/store'
 import UserList from './nested/UserList'
-import { addUser, removeUser } from '../store/usersSlice'
+import { addUser, removeUser, fetchUsers } from '../store/usersSlice'
 
 const Users: React.FC = () => {
-  const users = useSelector((state: RootState) => state.users)
+  const { data: users, loading, error } = useSelector((state: RootState) => state.users)
   const dispatch: AppDispatch = useDispatch()
   const [newUser, setNewUser] = useState('')
+
+  useEffect(() => {
+    dispatch(fetchUsers())
+  }, [dispatch])
 
   const handleAddUser = () => {
     if (newUser.trim()) {
@@ -19,6 +23,9 @@ const Users: React.FC = () => {
   const handleRemoveUser = (id: number) => {
     dispatch(removeUser(id))
   }
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error}</p>
 
   return (
     <div className="users-page">
